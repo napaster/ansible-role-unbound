@@ -2,7 +2,7 @@
 {{ '  name: \"' + us['name'] + '\"' }}
 {% if us['stub_address'] is defined and us['stub_address'] != '' %}
 {% for uss in us['stub_address'] %}
-{% if uss['address'] | ansible.utilus['ipaddr']('host') %}
+{% if uss['address'] | ansible.utils.ipaddr('host') %}
 {% if uss['port'] is defined and uss['port'] != '' %}
 {{ '  stub-addr: ' + uss['address'] + '@' ~ uss['port'] }}
 {% else %}
