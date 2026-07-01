@@ -1,4 +1,5 @@
-{% if us['username'] is defined and us['username'] != '' %}
+{% if us['username'] is defined and us['username']
+  not in ['', [], '[]', None] %}
 {{ '  username: ' + us['username'] | string() }}
 {% endif %}
 {% if us['use_systemd'] is defined and us['use_systemd'] in ['yes', 'no'] %}
@@ -7,16 +8,18 @@
 {% if us['do_daemonize'] is defined and us['do_daemonize'] in ['yes', 'no'] %}
 {{ '  do-daemonize: ' + us['do_daemonize'] }}
 {% endif %}
-{% if us['chroot'] is defined and us['chroot'] != '' %}
+{% if us['chroot'] is defined and us['chroot'] not in ['', [], '[]', None] %}
 {{ '  chroot: ' + us['chroot'] }}
 {% endif %}
-{% if us['directory'] is defined and us['directory'] != '' %}
+{% if us['directory'] is defined and us['directory']
+  not in ['', [], '[]', None] %}
 {{ '  directory: ' + us['directory'] }}
 {% endif %}
-{% if us['pidfile'] is defined and us['pidfile'] != '' %}
+{% if us['pidfile'] is defined and us['pidfile'] not in ['', [], '[]', None] %}
 {{ '  pidfile: ' + us['pidfile'] }}
 {% endif %}
-{% if us['root_hints'] is defined and us['root_hints'] != '' %}
+{% if us['root_hints'] is defined and us['root_hints']
+  not in ['', [], '[]', None] %}
 {{ '  root-hints: ' + us['root_hints'] }}
 {% endif %}
 {% if us['hide_identity'] is defined and us['hide_identity'] in ['yes', 'no'] %}
@@ -25,10 +28,11 @@
 {% if us['hide_version'] is defined and us['hide_version'] in ['yes', 'no'] %}
 {{ '  hide-version: ' + us['hide_version'] }}
 {% endif %}
-{% if us['identity'] is defined and us['identity'] != '' %}
+{% if us['identity'] is defined and us['identity']
+  not in ['', [], '[]', None] %}
 {{ '  identity: ' + us['identity'] | string }}
 {% endif %}
-{% if us['version'] is defined and us['version'] != '' %}
+{% if us['version'] is defined and us['version'] not in ['', [], '[]', None] %}
 {{ '  version: ' + us['version'] | string }}
 {% endif %}
 {% if us['verbosity'] is defined and us['verbosity'] in ['0', '1', '2', '3',
@@ -36,7 +40,7 @@
 {{ '  verbosity: ' ~ us['verbosity'] }}
 {% endif %}
 {% if us['statistics_interval'] is defined and
-  us['statistics_interval'] != '' %}
+  us['statistics_interval'] not in ['', [], '[]', None] %}
 {{ '  statistics-interval: ' ~ us['statistics_interval'] }}
 {% endif %}
 {% if us['statistics_cumulative'] is defined and us['statistics_cumulative'] in
@@ -47,16 +51,18 @@
   ['yes', 'no'] %}
 {{ '  extended-statistics: ' + us['extended_statistics'] }}
 {% endif %}
-{% if us['num_threads'] is defined and us['num_threads'] != '' %}
+{% if us['num_threads'] is defined and us['num_threads']
+  not in ['', [], '[]', None] %}
 {{ '  num-threads: ' ~ us['num_threads'] }}
 {% endif %}
-{% if us['logfile'] is defined and us['logfile'] != '' %}
+{% if us['logfile'] is defined and us['logfile'] not in ['', [], '[]', None] %}
 {{ '  logfile: ' + us['logfile'] }}
 {% endif %}
 {% if us['use_syslog'] is defined and us['use_syslog'] in ['yes', 'no'] %}
 {{ '  use-syslog: ' + us['use_syslog'] }}
 {% endif %}
-{% if us['log_identity'] is defined and us['log_identity'] != '' %}
+{% if us['log_identity'] is defined and
+  us['log_identity'] not in ['', [], '[]', None] %}
 {{ '  ' ~ 'log-identity: ' ~ us['log_identity'] }}
 {% endif %}
 {% if us['log_time_ascii'] is defined and us['log_time_ascii'] in ['yes',
@@ -70,33 +76,38 @@
 {{ '  log-replies: ' + us['log_replies'] }}
 {% endif %}
 {% if us['interface_automatic'] is defined and us['interface_automatic'] in
-      ['yes', 'no'] %}
+  ['yes', 'no'] %}
 {{ '  interface-automatic: ' + us['interface_automatic'] }}
 {% endif %}
-{% if us['port'] is defined and us['port'] != '' %}
+{% if us['port'] is defined and us['port'] not in ['', [], '[]', None] %}
 {{ '  port: ' ~ us['port'] }}
 {% endif %}
-{% if us['outgoing_range'] is defined and us['outgoing_range'] != '' %}
+{% if us['outgoing_range'] is defined and us['outgoing_range']
+  not in ['', [], '[]', None] %}
 {{ '  outgoing-range: ' ~ us['outgoing_range'] }}
 {% endif %}
 {% if us['outgoing_port_permit'] is defined and
-  us['outgoing_port_permit'] != '' %}
+  us['outgoing_port_permit'] not in ['', [], '[]', None] %}
 {{ '  outgoing-port-permit: ' ~ us['outgoing_port_permit'] }}
 {% endif %}
 {% if us['outgoing_port_avoid'] is defined and
-  us['outgoing_port_avoid'] != '' %}
+  us['outgoing_port_avoid'] not in ['', [], '[]', None] %}
 {{ '  outgoing-port-avoid: ' ~ us['outgoing_port_avoid'] }}
 {% endif %}
-{% if us['outgoing_num_tcp'] is defined and us['outgoing_num_tcp'] != '' %}
+{% if us['outgoing_num_tcp'] is defined and us['outgoing_num_tcp']
+  not in ['', [], '[]', None] %}
 {{ '  outgoing-num-tcp: ' ~ us['outgoing_num_tcp'] }}
 {% endif %}
-{% if us['incoming_num_tcp'] is defined and us['incoming_num_tcp'] != '' %}
+{% if us['incoming_num_tcp'] is defined and us['incoming_num_tcp']
+  not in ['', [], '[]', None] %}
 {{ '  incoming-num-tcp: ' ~ us['incoming_num_tcp'] }}
 {% endif %}
-{% if us['so_rcvbuf'] is defined and us['so_rcvbuf'] != '' %}
+{% if us['so_rcvbuf'] is defined and us['so_rcvbuf']
+  not in ['', [], '[]', None] %}
 {{ '  so-rcvbuf: ' ~ us['so_rcvbuf'] }}
 {% endif %}
-{% if us['so_sndbuf'] is defined and us['so_sndbuf'] != '' %}
+{% if us['so_sndbuf'] is defined and us['so_sndbuf']
+  not in ['', [], '[]', None] %}
 {{ '  so-sndbuf: ' ~ us['so_sndbuf'] }}
 {% endif %}
 {% if us['so_reuseport'] is defined and us['so_reuseport'] in ['yes', 'no'] %}
@@ -109,60 +120,74 @@
 {% if us['ip_freebind'] is defined and us['ip_freebind'] in ['yes', 'no'] %}
 {{ '  ip-freebind: ' + us['ip_freebind'] }}
 {% endif %}
-{% if us['edns_buffer_size'] is defined and us['edns_buffer_size'] != '' %}
+{% if us['edns_buffer_size'] is defined and us['edns_buffer_size']
+  not in ['', [], '[]', None] %}
 {{ '  edns-buffer-size: ' ~ us['edns_buffer_size'] }}
 {% endif %}
-{% if us['max_udp_size'] is defined and us['max_udp_size'] != '' %}
+{% if us['max_udp_size'] is defined and us['max_udp_size']
+  not in ['', [], '[]', None] %}
 {{ '  max-udp-size: ' ~ us['max_udp_size'] }}
 {% endif %}
-{% if us['msg_buffer_size'] is defined and us['msg_buffer_size'] != '' %}
+{% if us['msg_buffer_size'] is defined and us['msg_buffer_size']
+  not in ['', [], '[]', None] %}
 {{ '  msg-buffer-size: ' ~ us['msg_buffer_size'] }}
 {% endif %}
-{% if us['msg_cache_size'] is defined and us['msg_cache_size'] != '' %}
+{% if us['msg_cache_size'] is defined and us['msg_cache_size']
+  not in ['', [], '[]', None] %}
 {{ '  msg-cache-size: ' ~ us['msg_cache_size'] }}
 {% endif %}
-{% if us['msg_cache_slabs'] is defined and us['msg_cache_slabs'] != '' %}
+{% if us['msg_cache_slabs'] is defined and us['msg_cache_slabs']
+  not in ['', [], '[]', None] %}
 {{ '  msg-cache-slabs: ' ~ us['msg_cache_slabs'] }}
 {% endif %}
 {% if us['num_queries_per_thread'] is defined and
-  us['num_queries_per_thread'] != '' %}
+  us['num_queries_per_thread'] not in ['', [], '[]', None] %}
 {{ '  num-queries-per-thread: ' ~ us['num_queries_per_thread'] }}
 {% endif %}
-{% if us['jostle_timeout'] is defined and us['jostle_timeout'] != '' %}
+{% if us['jostle_timeout'] is defined and us['jostle_timeout']
+  not in ['', [], '[]', None] %}
 {{ '  jostle-timeout: ' ~ us['jostle_timeout'] }}
 {% endif %}
-{% if us['rrset_cache_size'] is defined and us['rrset_cache_size'] != '' %}
+{% if us['rrset_cache_size'] is defined and us['rrset_cache_size']
+  not in ['', [], '[]', None] %}
 {{ '  rrset-cache-size: ' ~ us['rrset_cache_size'] }}
 {% endif %}
-{% if us['rrset_cache_slabs'] is defined and us['rrset_cache_slabs'] != '' %}
+{% if us['rrset_cache_slabs'] is defined and us['rrset_cache_slabs']
+  not in ['', [], '[]', None] %}
 {{ '  rrset-cache-slabs: ' ~ us['rrset_cache_slabs'] }}
 {% endif %}
-{% if us['cache_min_ttl'] is defined and us['cache_min_ttl'] != '' %}
+{% if us['cache_min_ttl'] is defined and us['cache_min_ttl']
+  not in ['', [], '[]', None] %}
 {{ '  cache-min-ttl: ' ~ us['cache_min_ttl'] }}
 {% endif %}
-{% if us['cache_max_ttl'] is defined and us['cache_max_ttl'] != '' %}
+{% if us['cache_max_ttl'] is defined and us['cache_max_ttl']
+  not in ['', [], '[]', None] %}
 {{ '  cache-max-ttl: ' ~ us['cache_max_ttl'] }}
 {% endif %}
 {% if us['cache_max_negative_ttl'] is defined and
-  us['cache_max_negative_ttl'] != '' %}
+  us['cache_max_negative_ttl'] not in ['', [], '[]', None] %}
 {{ '  cache-max-negative-ttl: ' ~ us['cache_max_negative_ttl'] }}
 {% endif %}
-{% if us['infra_host_ttl'] is defined and us['infra_host_ttl'] != '' %}
+{% if us['infra_host_ttl'] is defined and us['infra_host_ttl']
+  not in ['', [], '[]', None] %}
 {{ '  infra-host-ttl: ' ~ us['infra_host_ttl'] }}
 {% endif %}
-{% if us['infra_cache_slabs'] is defined and us['infra_cache_slabs'] != '' %}
+{% if us['infra_cache_slabs'] is defined and us['infra_cache_slabs']
+  not in ['', [], '[]', None] %}
 {{ '  infra-cache-slabs: ' ~ us['infra_cache_slabs'] }}
 {% endif %}
 {% if us['infra_cache_min_rtt'] is defined and
-  us['infra_cache_min_rtt'] != '' %}
+  us['infra_cache_min_rtt'] not in ['', [], '[]', None] %}
 {{ '  infra-cache-min-rtt: ' ~ us['infra_cache_min_rtt'] }}
 {% endif %}
 {% if us['infra_cache_numhosts'] is defined and
-  us['infra_cache_numhosts'] != '' %}
+  us['infra_cache_numhosts'] not in ['', [], '[]', None] %}
 {{ '  infra-cache-numhosts: ' ~ us['infra_cache_numhosts'] }}
 {% endif %}
-{% if us['define_tag'] is defined and us['define_tag'] != '' %}
-{{- '  define-tag: \"' + us['define_tag'] | join( ' ' ) + '\"' }}
+{% if us['define_tag'] is defined and us['define_tag']
+  not in ['', [], '[]', None] %}
+{{- '  define-tag: \"' + (us['define_tag'] | ansible.builtin.join( ' ' )) +
+  '\"' }}
 {% endif %}
 {% if us['do_ip4'] is defined and us['do_ip4'] in ['yes', 'no'] %}
 {{ '  do-ip4: ' + us['do_ip4'] }}
@@ -179,10 +204,12 @@
 {% if us['do_tcp'] is defined and us['do_tcp'] in ['yes', 'no'] %}
 {{ '  do-tcp: ' + us['do_tcp'] }}
 {% endif %}
-{% if us['tcp_mss'] is defined and us['tcp_mss'] != '' %}
+{% if us['tcp_mss'] is defined and us['tcp_mss']
+  not in ['', [], '[]', None] %}
 {{ '  tcp-mss: ' ~ us['tcp_mss'] }}
 {% endif %}
-{% if us['outgoing_tcp_mss'] is defined and us['outgoing_tcp_mss'] != '' %}
+{% if us['outgoing_tcp_mss'] is defined and us['outgoing_tcp_mss']
+  not in ['', [], '[]', None] %}
 {{ '  outgoing-tcp-mss: ' ~ us['outgoing_tcp_mss'] }}
 {% endif %}
 {% if us['tcp_upstream'] is defined and us['tcp_upstream'] in ['yes', 'no'] %}

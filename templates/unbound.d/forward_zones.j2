@@ -1,9 +1,10 @@
 {{ 'forward-zone:' }}
 {{ '  name: \"' + uf['name'] + '\"' }}
-{% if uf['forward_address'] is defined and uf['forward_address'] != '' %}
+{% if uf['forward_address'] is defined and uf['forward_address']
+  not in ['', [], '[]', None] %}
 {% for ufa in uf['forward_address'] %}
-{% if ufa['address'] | ansible.utils.ipaddr('host') %}
-{% if ufa['port'] is defined and ufa['port'] != '' %}
+{% if ufa['address'] is ansible.utils.ip() %}
+{% if ufa['port'] is defined and ufa['port'] not in ['', [], '[]', None] %}
 {{ '  forward-addr: ' + ufa['address'] + '@' ~ ufa['port'] }}
 {% else %}
 {{ '  forward-addr: ' + ufa['address'] }}
@@ -11,9 +12,10 @@
 {% endif %}
 {% endfor %}
 {% endif %}
-{% if uf['forward_host'] is defined and uf['forward_host'] != '' %}
+{% if uf['forward_host'] is defined and uf['forward_host']
+  not in ['', [], '[]', None] %}
 {% for ufh in uf['forward_host'] %}
-{% if ufh['port'] is defined and ufh['port'] != '' %}
+{% if ufh['port'] is defined and ufh['port'] not in ['', [], '[]', None] %}
 {{ '  forward-host: ' + ufh['host'] + '@' ~ ufh['port'] }}
 {% else %}
 {{ '  forward-host: ' + ufh['host'] }}

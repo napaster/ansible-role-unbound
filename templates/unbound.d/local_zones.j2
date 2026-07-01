@@ -1,16 +1,17 @@
-{% if (ul['name'] is defined and ul['name'] != '') and
-  (ul['action'] is defined and ul['action'] != '') %}
+{% if (ul['name'] is defined and ul['name'] not in ['', [], '[]', None]) and
+  (ul['action'] is defined and ul['action'] not in ['', [], '[]', None]) %}
 {% if ul['action'] in ['deny', 'refuse', 'static', 'transparent',
   'typetransparent', 'redirect', 'inform', 'inform_deny', 'always_transparent',
-  'always_refuse', 'always_nxdomain', 'nodefault'] %}
+  'block_a', 'always_refuse', 'always_nxdomain', 'always_nodata', 'always_deny',
+  'always_null', 'noview', 'nodefault'] %}
 {{ '  local-zone: \"' + ul['name'] + '\" ' + ul['action'] }}
 {% endif %}
-{% if ul['data'] is defined and ul['data'] != '' %}
+{% if ul['data'] is defined and ul['data'] not in ['', [], '[]', None] %}
 {% for ulz in ul['data'] %}
 {% if ulz['resource'] is defined and ulz['type'] is defined and
   ulz['answer'] is defined %}
 {% if ulz['type'] in 'TXT' %}
-{% if ulz['ttl'] is defined and ulz['ttl'] != '' %}
+{% if ulz['ttl'] is defined and ulz['ttl'] not in ['', [], '[]', None] %}
 {{ '  local-data: \'' ~ ulz['resource'] ~ ' ' ~ ulz['ttl'] ~ ' ' ~
   ulz['type'] ~ ' \"' ~ ulz['answer'] ~ '\"\'' }}
 {% else %}
@@ -18,7 +19,7 @@
   ulz['answer'] ~ '\"\'' }}
 {% endif %}
 {% else %}
-{% if ulz['ttl'] is defined and ulz['ttl'] != '' %}
+{% if ulz['ttl'] is defined and ulz['ttl'] not in ['', [], '[]', None] %}
 {{ '  local-data: \"' ~ ulz['resource'] ~ ' ' ~ ulz['ttl'] ~ ' ' ~
   ulz['type'] ~ ' ' ~ ulz['answer'] ~ '\"' }}
 {% else %}
@@ -29,10 +30,11 @@
 {% endif %}
 {% endfor %}
 {% endif %}
-{% if ul['data_ptr'] is defined and ul['data_ptr'] != '' %}
+{% if ul['data_ptr'] is defined and ul['data_ptr']
+  not in ['', [], '[]', None] %}
 {% for ulz in ul['data_ptr'] %}
 {% if ulz['resource'] is defined and ulz['answer'] is defined %}
-{% if ulz['ttl'] is defined and ulz['ttl'] != '' %}
+{% if ulz['ttl'] is defined and ulz['ttl'] not in ['', [], '[]', None] %}
 {{ '  local-data-ptr: \"' ~ ulz['resource'] ~ ' ' ~ ulz['ttl'] ~ ' ' ~
   ulz['answer'] ~ '\"' }}
 {% else %}
@@ -41,8 +43,8 @@
 {% endif %}
 {% endfor %}
 {% endif %}
-{% if ul['tags'] is defined and ul['tags'] != '' %}
-{{- '  local-zone-tag: \"' ~ ul['name'] ~ '\" \"' ~ ul['tags'] |
-  join( ' ' ) ~ '\"' }}
+{% if ul['tags'] is defined and ul['tags'] not in ['', [], '[]', None] %}
+{{- '  local-zone-tag: \"' ~ ul['name'] ~ '\" \"' ~ (ul['tags'] |
+  ansible.builtin.join( ' ' )) ~ '\"' }}
 {% endif %}
 {% endif %}
