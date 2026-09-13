@@ -1,0 +1,28 @@
+---
+- name: "unbound | Download root hints [when not exists]"
+  ansible.builtin.get_url:
+    url: "{{ lookup('ansible.builtin.vars', 'unbound_root_hints_src') }}"
+    dest: "{{ lookup('ansible.builtin.vars', 'unbound_root_hints_dst') }}"
+    mode: "0644"
+    owner: "root"
+    group: "root"
+  notify:
+    - "Reload unbound daemon"
+  when:
+    - "lookup('ansible.builtin.vars', 'unbound_download_root_hints',
+      default='') == 'true'"
+    - "not lookup('ansible.builtin.vars',
+      'unbound_root_hints_stat')['stat']['exists']"
+- name: "unbound | Download root hints [always]"
+  ansible.builtin.get_url:
+    url: "{{ lookup('ansible.builtin.vars', 'unbound_root_hints_src') }}"
+    dest: "{{ lookup('ansible.builtin.vars', 'unbound_root_hints_dst') }}"
+    mode: "0644"
+    owner: "root"
+    group: "root"
+    force: "yes"
+  notify:
+    - "Reload unbound daemon"
+  when:
+    - "lookup('ansible.builtin.vars', 'unbound_download_root_hints',
+      default='') == 'always'"

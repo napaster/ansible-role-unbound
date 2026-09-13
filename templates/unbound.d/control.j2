@@ -1,4 +1,5 @@
-{% if ua['access_control'] is defined and ua['access_control'] != '' %}
+{% if ua['access_control'] is defined and ua['access_control']
+  not in ['', [], '[]', None] %}
 {% for uaa in ua['access_control'] %}
 {% if uaa['address'] is defined and uaa['address'] |
   ansible.utils.ipaddr('net') %}
@@ -9,20 +10,21 @@
 {% endif %}
 {% endfor %}
 {% endif %}
-{% if ua['access_control_tag'] is defined and ua['access_control_tag'] != '' %}
+{% if ua['access_control_tag'] is defined and ua['access_control_tag']
+  not in ['', [], '[]', None] %}
 {% for uaa in ua['access_control_tag'] %}
-{% if (uaa.address is defined and uaa.address |
-  ansible.utils.ipaddr('net')) and (uaa.tags is defined and uaa.tags != '') %}
-{{ '  access-control-tag: ' + uaa['address'] ~ ' \"' ~ uaa['tags'] |
-  join( ' ' ) ~ '\"' }}
+{% if (uaa.address is defined and uaa.address is ansible.utils.ip()) and
+  (uaa.tags is defined and uaa.tags not in ['', [], '[]', None]) %}
+{{ '  access-control-tag: ' + uaa['address'] ~ ' \"' ~ (uaa['tags'] |
+  ansible.builtin.join( ' ' )) ~ '\"' }}
 {% endif %}
 {% endfor %}
 {% endif %}
 {% if ua['access_control_tag_action'] is defined and
-  ua['access_control_tag_action'] != '' %}
+  ua['access_control_tag_action'] not in ['', [], '[]', None] %}
 {% for uat in ua['access_control_tag_action'] %}
-{% if (uat.address is defined and uat.address | ansible.utils.ipaddr('net')) and
-  (uat.tag is defined and uat.tag != '') %}
+{% if (uat.address is defined and uat.address is ansible.utils.ip()) and
+  (uat.tag is defined and uat.tag not in ['', [], '[]', None]) %}
 {% if uat.action is defined and uat.action in ['deny', 'refuse', 'allow',
   'allow_snoop', 'deny_non_local', 'refuse_non_local'] %}
 {{ '  access-control-tag-action: ' + uat.address ~ ' ' ~ uat.tag ~ ' ' ~
@@ -32,10 +34,10 @@
 {% endfor %}
 {% endif %}
 {% if ua['access_control_view'] is defined and
-  ua['access_control_view'] != '' %}
+  ua['access_control_view'] not in ['', [], '[]', None] %}
 {% for uav in ua['access_control_view'] %}
-{% if (uav.address is defined and uav.address |
-  ansible.utils.ipaddr('net')) and (uav.view is defined and uav.view != '') %}
+{% if (uav.address is defined and uav.address is ansible.utils.ip()) and
+  (uav.view is defined and uav.view not in ['', [], '[]', None]) %}
 {{ '  access-control-view: ' + uav.address ~ ' ' ~ uav.view }}
 {% endif %}
 {% endfor %}

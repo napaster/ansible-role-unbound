@@ -1,0 +1,20 @@
+{% if ui['listen_interfaces'] is defined and ui['listen_interfaces']
+  not in ['', [], '[]', None] %}
+{% for uii in ui['listen_interfaces'] %}
+{% if uii['address'] is ansible.utils.ip() %}
+{% if uii['port'] is defined and uii['port'] not in ['', [], '[]', None] %}
+{{ '  interface: ' + uii['address'] + '@' ~ uii['port'] }}
+{% else %}
+{{ '  interface: ' + uii['address'] }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if ui['outgoing_interfaces'] is defined and ui['outgoing_interfaces']
+  not in ['', [], '[]', None] %}
+{% for uii in ui['outgoing_interfaces'] %}
+{% if uii is ansible.utils.ip() %}
+{{ '  outgoing-interface: ' + uii }}
+{% endif %}
+{% endfor %}
+{% endif %}

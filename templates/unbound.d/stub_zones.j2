@@ -1,9 +1,10 @@
 {{ 'stub-zone:' }}
 {{ '  name: \"' + us['name'] + '\"' }}
-{% if us['stub_address'] is defined and us['stub_address'] != '' %}
+{% if us['stub_address'] is defined and us['stub_address']
+  not in ['', [], '[]', None] %}
 {% for uss in us['stub_address'] %}
-{% if uss['address'] | ansible.utils.ipaddr('host') %}
-{% if uss['port'] is defined and uss['port'] != '' %}
+{% if uss['address'] is ansible.utils.ip() %}
+{% if uss['port'] is defined and uss['port'] not in ['', [], '[]', None] %}
 {{ '  stub-addr: ' + uss['address'] + '@' ~ uss['port'] }}
 {% else %}
 {{ '  stub-addr: ' + uss['address'] }}
@@ -11,9 +12,10 @@
 {% endif %}
 {% endfor %}
 {% endif %}
-{% if us['stub_host'] is defined and us['stub_host'] != '' %}
+{% if us['stub_host'] is defined and us['stub_host']
+  not in ['', [], '[]', None] %}
 {% for ush in us['stub_host'] %}
-{% if ush['port'] is defined and ush['port'] != '' %}
+{% if ush['port'] is defined and ush['port'] not in ['', [], '[]', None] %}
 {{ '  stub-host: ' + ush['host'] + '@' ~ ush['port'] }}
 {% else %}
 {{ '  stub-host: ' + ush['host'] }}
