@@ -2,52 +2,57 @@
 {{ '# ' + ansible_managed }}
 {{ '# Do not edit manually' }}
 
-{% for u in vars['unbound_settings'] %}
+{% for u in lookup('ansible.builtin.vars', 'unbound_settings') %}
 {% if u['server'] is defined or u['interfaces'] is defined %}
 {{ 'server:' }}
 {% endif %}
-{% if u['server'] is defined and u['server'] != '' %}
+{% if u['server'] is defined and u['server'] not in ['', [], '[]', None] %}
 {% for us in u['server'] %}
-{% include 'unbound_server.j2' %}
+{% include 'unbound.d/server.j2' %}
 {% endfor %}
 {% endif %}
-{% if u['interfaces'] is defined and u['interfaces'] != '' %}
+{% if u['interfaces'] is defined and u['interfaces']
+  not in ['', [], '[]', None] %}
 {% for ui in u['interfaces'] %}
-{% include 'unbound_interfaces.j2' %}
+{% include 'unbound.d/interfaces.j2' %}
 {% endfor %}
 {% endif %}
-{% if u['local_zones'] is defined and u['local_zones'] != '' %}
+{% if u['local_zones'] is defined and u['local_zones']
+  not in ['', [], '[]', None] %}
 {% for ul in u['local_zones'] %}
-{% include 'unbound_local_zones.j2' %}
+{% include 'unbound.d/local_zones.j2' %}
 {% endfor %}
 {% endif %}
-{% if u['control'] is defined and u['control'] != '' %}
+{% if u['control'] is defined and u['control'] not in ['', [], '[]', None] %}
 {% for ua in u['control'] %}
-{% include 'unbound_control.j2' %}
+{% include 'unbound.d/control.j2' %}
 {% endfor %}
 {% endif %}
 {% if u['remote_control'] is defined %}
 {{ 'remote-control:' }}
 {{ '  control-enable: yes' }}
 {% endif %}
-{% if u['remote_control'] is defined and u['remote_control'] != '' %}
+{% if u['remote_control'] is defined and u['remote_control']
+  not in ['', [], '[]', None] %}
 {% for ur in u['remote_control'] %}
-{% include 'unbound_remote_control.j2' %}
+{% include 'unbound.d/remote_control.j2' %}
 {% endfor %}
 {% endif %}
-{% if u['forward_zones'] is defined and u['forward_zones'] != '' %}
+{% if u['forward_zones'] is defined and u['forward_zones']
+  not in ['', [], '[]', None] %}
 {% for uf in u['forward_zones'] %}
-{% include 'unbound_forward_zones.j2' %}
+{% include 'unbound.d/forward_zones.j2' %}
 {% endfor %}
 {% endif %}
-{% if u['stub_zones'] is defined and u['stub_zones'] != '' %}
+{% if u['stub_zones'] is defined and u['stub_zones']
+  not in ['', [], '[]', None] %}
 {% for us in u['stub_zones'] %}
-{% include 'unbound_stub_zones.j2' %}
+{% include 'unbound.d/stub_zones.j2' %}
 {% endfor %}
 {% endif %}
-{% if u['views'] is defined and u['views'] != '' %}
+{% if u['views'] is defined and u['views'] not in ['', [], '[]', None] %}
 {% for uv in u['views'] %}
-{% include 'unbound_views.j2' %}
+{% include 'unbound.d/views.j2' %}
 {% endfor %}
 {% endif %}
 {% endfor %}

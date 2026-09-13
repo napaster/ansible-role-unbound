@@ -1,9 +1,11 @@
-{% if ur['control_interfaces'] is defined and ur['control_interfaces'] != '' %}
+{% if ur['control_interfaces'] is defined and ur['control_interfaces']
+  not in ['', [], '[]', None] %}
 {% for int in ur['control_interfaces'] %}
 {{ '  control-interface: ' + int }}
 {% endfor %}
 {% endif %}
-{% if ur['control_port'] is defined and ur['control_port'] != '' %}
+{% if ur['control_port'] is defined and ur['control_port']
+  not in ['', [], '[]', None] %}
 {{ '  control-port: ' ~ ur['control_port'] }}
 {% endif %}
 {% if ur['control_use_cert'] is defined and ur['control_use_cert'] in ['yes',
@@ -14,12 +16,15 @@
   'no'] %}
 {{ '  server-key-file: ' + ur['server_key_file'] }}
 {% endif %}
-{% if ur['server_cert_file'] is defined and ur['server_cert_file'] != '' %}
+{% if ur['server_cert_file'] is defined and ur['server_cert_file']
+  not in ['', [], '[]', None] %}
 {{ '  server-cert-file: ' + ur['server_cert_file'] }}
 {% endif %}
-{% if ur['control_key_file'] is defined and ur['control_key_file'] != '' %}
+{% if ur['control_key_file'] is defined and ur['control_key_file']
+  not in ['', [], '[]', None] %}
 {{ '  control-key-file: ' + ur['control_key_file'] }}
 {% endif %}
-{% if ur['control_cert_file'] is defined and ur['control_cert_file'] != '' %}
+{% if ur['control_cert_file'] is defined and ur['control_cert_file']
+  not in ['', [], '[]', None] %}
 {{ '  control-cert-file: ' + ur['control_cert_file'] }}
 {% endif %}

@@ -1,15 +1,15 @@
 {{ 'view:' }}
 {{ '  name: \"' ~ uv['name'] + '\"' }}
-{% if uv['zones'] is defined and uv['zones'] != ''%}
+{% if uv['zones'] is defined and uv['zones'] not in ['', [], '[]', None]%}
 {% for uvz in uv['zones'] %}
-{% if (uvz['name'] is defined and uvz['name'] != '') and (uvz['action'] is
-  defined and uvz['action'] != '') %}
+{% if (uvz['name'] is defined and uvz['name'] not in ['', [], '[]', None]) and
+  (uvz['action'] is defined and uvz['action'] not in ['', [], '[]', None]) %}
 {% if uvz['action'] in ['deny', 'refuse', 'static', 'transparent',
   'typetransparent', 'redirect', 'inform', 'inform_deny',
   'always_transparent', 'always_refuse', 'always_nxdomain', 'nodefault'] %}
 {{ '  local-zone: \"' + uvz['name'] + '\" ' + uvz['action'] }}
 {% endif %}
-{% if uvz['data'] is defined and uvz['data'] != '' %}
+{% if uvz['data'] is defined and uvz['data'] not in ['', [], '[]', None] %}
 {% for uvlz in uvz['data'] %}
 {% if uvzl['resource'] is defined and uvzl['type'] is defined and
   uvzl['answer'] is defined %}
@@ -23,15 +23,15 @@
 {% endif %}
 {% endfor %}
 {% endif %}
-{% if uvz['data_ptr'] is defined and uvz['data_ptr'] != '' %}
+{% if uvz['data_ptr'] is defined and uvz['data_ptr']
+  not in ['', [], '[]', None] %}
 {% for uvzl in uvz['data_ptr'] %}
 {% if uvzl['resource'] is defined and uvzl['answer'] is defined %}
-{% if uvzl['ttl'] is defined and uvzl['ttl'] != '' %}
+{% if uvzl['ttl'] is defined and uvzl['ttl'] not in ['', [], '[]', None] %}
 {{ '  local-data-ptr: \"' ~ uvzl['resource'] ~ ' ' ~ uvzl['ttl'] ~ ' ' ~
   uvzl['answer'] ~ '\"' }}
 {% else %}
-{{ '  local-data-ptr: \"' + uvzl['resource'] + ' ' + uvzl['answer'] +
-  '\"' }}
+{{ '  local-data-ptr: \"' + uvzl['resource'] + ' ' + uvzl['answer'] + '\"' }}
 {% endif %}
 {% endif %}
 {% endfor %}

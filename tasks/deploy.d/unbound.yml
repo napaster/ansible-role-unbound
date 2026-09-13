@@ -1,0 +1,48 @@
+---
+- name: "unbound | Unbound control setup"
+  ansible.builtin.command:
+    cmd: "{{ 'unbound-control-setup -d ' + lookup('ansible.builtin.vars',
+      'unbound_control_setup_dst') }}"
+  register: "unbound_control_setup_result"
+  changed_when: "unbound_control_setup_result['rc'] == 0"
+  failed_when: "unbound_control_setup_result['rc'] != 0"
+  when:
+    - "lookup('ansible.builtin.vars', 'unbound', default='')
+      not in ['', [], '[]', None]"
+    - "lookup('ansible.builtin.vars', 'unbound') |
+       community.general.json_query(lookup('ansible.builtin.vars',
+      'unbound_control_setup', default='')) == 'always' or
+      (lookup('ansible.builtin.vars', 'unbound') |
+       community.general.json_query(lookup('ansible.builtin.vars',
+      'unbound_control_setup', default='')) == 'true' and
+      lookup('ansible.builtin.vars', 'unbound_control_find_result')['files']
+      in ['', [], '[]', None])"
+  vars:
+    unbound_control_setup: "[] | map(&control_setup || 'false', @) | [0]"
+- name: "unbound | Deploy unbound configuration"
+  ansible.builtin.template:
+    src: "unbound.j2"
+    dest: "{{ lookup('ansible.builtin.vars', 'unbound_conf_dest') +
+      '/unbound.conf' }}"
+    group: "root"
+    owner: "root"
+    mode: "0644"
+    force: "yes"
+    validate: "unbound-checkconf %s"
+  when:
+    - "lookup('ansible.builtin.vars', 'unbound_settings', default='')
+      not in ['', [], '[]', None]"
+  notify:
+    - "Reload unbound daemon"
+- name: "unbound | Enable unbound"
+  ansible.builtin.systemd:
+    name: "{{ lookup('ansible.builtin.vars', 'unbound_service') }}"
+    enabled: "yes"
+  when:
+    - "lookup('ansible.builtin.vars', 'unbound', default='')
+      not in ['', [], '[]', None]"
+    - "lookup('ansible.builtin.vars', 'unbound') |
+       community.general.json_query(lookup('ansible.builtin.vars',
+      'unbound_enable', default='')) == 'true'"
+  vars:
+    unbound_enable: "[] | map(&enable || 'false', @) | [0]"
